@@ -97,10 +97,6 @@ The system follows an advanced RAG (Retrieval-Augmented Generation) Pipeline as 
 
 User Query → Retriever → Vector Database → Relevant Context → LLM → Final Answer
 
-### High-Level Flow
-
-User Query → Retriever → Vector Database → Relevant Context → LLM → Final Answer
-
 **Figure 1: High-Level RAG Architecture**
 
 <figure>
@@ -145,6 +141,7 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 7. Generate grounded answers using the LLM  
 
 ---
+
 
 
 
