@@ -1,7 +1,7 @@
 # Mini RAG-Powered Assistant
 
 ## Project Objective
-The goal of this project is to design and implement a basic Retrieval-Augmented Generation (RAG) assistant that can answer user questions using a custom document corpus. The problem statement focuses on building an AI assistant that can accurately answer user questions from large amounts of unstructured data such as PDFs and web content. Traditional keyword search is inefficient, and using a pure language model can lead to hallucinated or unreliable answers.
+The goal of this project is to design and implement a basic Retrieval-Augmented Generation (RAG) assistant that can answer user questions using a custom document corpus. The problem statement focuses on building an AI assistant that can accurately answer user questions from large amounts of data such as PDFs and web content. Traditional keyword search is inefficient, and using a pure language model can lead to hallucinated or unreliable answers.
 
 By this project we as a team demonstrates our hands-on understanding of:
 
@@ -168,6 +168,7 @@ To run the project locally:
 **Solution:** Restricted response generation strictly to retrieved document context  
 
 ---
+
 
 
 
