@@ -116,6 +116,13 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 
 ---
 
+**Figure 3: Working Code**
+
+<figure>
+  <img src="img/working" width="800" height="800" alt="High-Level RAG Architecture Diagram">
+  <figcaption>Working screenshot</figcaption>
+</figure>
+
 ## Technology Stack
 
 - **Programming Language:** Python  
@@ -189,6 +196,7 @@ Run the Streamlit application:
 
 ```bash
 streamlit run app.py
+
 
 
 
