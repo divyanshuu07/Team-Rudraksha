@@ -16,7 +16,7 @@ By this project we as a team demonstrates our hands-on understanding of:
 
 ---
 
-## ⚡ Key Features & Architectural Highlights
+## Key Features & Architectural Highlights
 
 This project implements a state-of-the-art RAG pipeline optimized for real-world interaction, transparency, and multi-format intelligence.
 
@@ -145,6 +145,7 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 7. Generate grounded answers using the LLM  
 
 ---
+
 
 
 
