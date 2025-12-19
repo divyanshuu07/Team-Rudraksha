@@ -1,7 +1,7 @@
 # Mini RAG-Powered Assistant
 
 ## Project Objective
-The goal of this project is to design and implement a basic Retrieval-Augmented Generation (RAG) assistant that can answer user questions using a custom document corpusThe problem statement focuses on building an AI assistant that can accurately answer user questions from large amounts of unstructured data such as PDFs and web content. Traditional keyword search is inefficient, and using a pure language model can lead to hallucinated or unreliable answers.
+The goal of this project is to design and implement a basic Retrieval-Augmented Generation (RAG) assistant that can answer user questions using a custom document corpus. The problem statement focuses on building an AI assistant that can accurately answer user questions from large amounts of data such as PDFs and web content. Traditional keyword search is inefficient, and using a pure language model can lead to hallucinated or unreliable answers.
 
 By this project we as a team demonstrates our hands-on understanding of:
 
@@ -16,64 +16,102 @@ By this project we as a team demonstrates our hands-on understanding of:
 
 ---
 
-## 🚀 Key Features & Architectural Highlights
+## Key Features & Architectural Highlights
 
-This project implements a state-of-the-art RAG pipeline with 9 distinct layers of optimization to ensure accuracy, speed, and reliability.
+This project implements a state-of-the-art RAG pipeline optimized for real-world interaction, transparency, and multi-format intelligence.
 
-### 1. Hybrid Search (Ensemble Retrieval)
-**The Problem:** Standard vector search misses exact keyword matches (like specific error codes or acronyms).
-**Our Solution:** We combine **Dense Vector Index** (OpenAI Embeddings) with **Sparse Keyword Index** (BM25). The system weights results from both, capturing both conceptual meaning and exact terminology.
+### 1. Multilingual Response (Cross-Lingual Support)
+* **The Problem:** Knowledge bases are often in English, but users may speak Hindi, Spanish, or French.
+* **Our Solution:** The system uses a **Cross-Lingual Chain**. It accepts queries in any language, translates them to English for retrieval against the database, and generates the final response back in the user's native language, breaking language barriers.
 
-### 2. Advanced Re-Ranking (Cross-Encoder)
-**The Problem:** The "Lost in the Middle" phenomenon where relevant context is buried in the retrieved list.
-**Our Solution:** We retrieve a broad set of documents (Top 25) and pass them through a **Cross-Encoder Model**. This re-scores every document-query pair for relevance, ensuring only the highest-quality chunks reach the LLM.
+### 2. Citation & Transparency Work
+* **The Problem:** Users do not trust "black box" AI models that hallucinate facts.
+* **Our Solution:** We enforce **Strict Evidence Binding**. Every response includes an expandable "Source" tab that links directly to the specific document name and page number used, ensuring 100% auditability and trust.
 
-### 3. Graph-Enhanced Context (GraphRAG)
-**The Problem:** Flat text chunks lose relationships between entities across different documents.
-**Our Solution:** We extract entities (People, Places, Concepts) and build a lightweight relationship map. Queries retrieve not just text chunks, but also connected "neighbor" nodes, providing deep contextual awareness.
+### 3. YouTube Context Integration
+* **The Problem:** Valuable information is often locked inside video tutorials or recorded meetings, inaccessible to text search.
+* **Our Solution:** The pipeline integrates `YouTubeAudioLoader` and OpenAI Whisper. It downloads audio, transcribes it into text, and indexes the transcript with timestamps, allowing users to "search" inside videos.
 
-### 4. Query Expansion & Decomposition
-**The Problem:** Users often ask vague or complex multi-part questions.
-**Our Solution:** The system uses an LLM call to break down complex queries into sub-questions and generates synonyms (hypothetical document embeddings) to broaden the search scope and improve retrieval recall.
+### 4. Query Expansion Layer
+* **The Problem:** Users often ask vague or overly simple questions (e.g., "slow wifi") that miss technical keywords.
+* **Our Solution:** We use an intermediate LLM step to **decompose and expand** the query. The system generates synonyms and sub-questions (Hypothetical Document Embeddings) to broaden the search scope and drastically improve retrieval recall.
 
-### 5. Hallucination Guardrails & Citations
-**The Problem:** Models making up facts.
-**Our Solution:**
-* **Strict Adherence:** The prompt forces the model to say "I don't know" if the context is missing.
-* **Citations:** Every response explicitly links to the source file and page number for full auditability.
+### 5. Multi-Modal Retrieval (Images & Tables)
+* **The Problem:** Critical data is often trapped in charts, infographics, or scanned tables within PDFs.
+* **Our Solution:** The ingestion pipeline utilizes **OCR (Optical Character Recognition)** and multi-modal models to extract text from images and structure tables into JSON before embedding, ensuring no data is left behind.
 
-### 6. Metadata Filtering (Self-Querying)
-**The Problem:** Searching purely by text when the user actually wants to filter (e.g., "Show me reports from 2023").
-**Our Solution:** We use a Self-Querying Retriever that extracts metadata filters (Date, Author, File Type) from the user's natural language and applies them *before* performing the vector search.
+### 6. Intelligent Summarization
+* **The Problem:** Users don't always have time to read detailed answers; sometimes they need a "TL;DR" of a 50-page report.
+* **Our Solution:** We implemented a **Map-Reduce Summarization Chain**. The system can take large sets of retrieved documents and recursively condense them into a concise executive summary without losing key details.
 
-### 7. Intelligent Chunking Strategy
-**The Problem:** Fixed-size chunking often cuts sentences in half or separates headers from their content.
-**Our Solution:** We use a **Recursive Character Text Splitter** with semantic awareness. It respects document structure (paragraphs, headers) to keep related text together, preserving semantic integrity.
+### 7. Conversation Memory (Session State)
+* **The Problem:** Standard RAG systems treat every question as a new interaction, failing to understand "What about the second point?"
+* **Our Solution:** We maintain a `ConversationBufferMemory`. The system rephrases follow-up questions into standalone queries using the previous chat history, ensuring a smooth, context-aware conversational flow.
 
-### 8. Multi-Modal Ingestion Support
-**The Problem:** Information is often trapped in images or tables within PDFs.
-**Our Solution:** The pipeline supports OCR (Optical Character Recognition) to extract text from images and specifically parses tables to preserve their row/column structure before embedding.
+### 8. User Feedback Loop (RLHF Lite)
+* **The Problem:** Developers rarely know when the RAG system fails or gives a bad answer.
+* **Our Solution:** We included a **Thumbs Up/Down** feedback mechanism. Negative feedback logs the query and retrieved context to a file, creating a dataset for future fine-tuning and system improvement (Reinforcement Learning from Human Feedback).
 
-### 9. Conversation Memory (Session State)
-**The Problem:** Users cannot ask follow-up questions in standard RAG scripts.
-**Our Solution:** We maintain a chat history buffer. The system rephrases follow-up questions (e.g., "What about the second point?") into standalone queries using the previous context, ensuring a smooth conversational flow.
+### 9. Auto-Generated Follow-Up
+* **The Problem:** Users often don't know what to ask next after getting an answer.
+* **Our Solution:** After generating a response, the LLM analyzes the context to suggest **3 relevant follow-up questions**. This guides the user deeper into the document and improves engagement.
 
 ---
 
+## Project Structure
+```
+Document_RAG/
+├── app/
+│   ├── requirements.txt
+│   ├── main.py
+│   ├── utils/
+│   │   ├── embeddings.py
+│   │   ├── pdf_processor.py
+│   │   ├── gemini_api.py
+├── .gitignore
+├── .venv
+```
+
 ## System Architecture
 
-The system follows a standard **RAG pipeline**:
+The system follows an advanced RAG (Retrieval-Augmented Generation) Pipeline as illustrated in the technical flow:
 
-1. Document ingestion and preprocessing  
-2. Text chunking with overlap  
-3. Embedding generation  
-4. Vector storage using FAISS  
-5. Query embedding and similarity search  
-6. Context-aware response generation using an LLM  
+1. Data Ingestion & Indexing  
+   - Multi-Source Input: The system ingests data from multiple formats, specifically PDFs and YouTube links.  
+   - Recursive Chunking: Raw text is processed through a recursive chunking strategy to maintain structural context.  
+   - Vector Embedding: Chunks are transformed into high-dimensional vectors using an Embedding Model.  
+   - Knowledge Base Construction: These embeddings are stored in a centralized Knowledge Base (Vector Store) for efficient retrieval.  
+
+2. Retrieval & Context Processing  
+   - Query Transformation: User queries are processed (and embedded) to align with the Knowledge Base.  
+   - Context Retrieval: The system performs a similarity search to pull the most relevant "Retrieved Context" from the Knowledge Base.  
+   - Hybrid Search: (As per your code) Combining semantic vector search with keyword-based retrieval.  
+
+3. Response Generation  
+   - Generator (LLM): The Retrieved Context is fed into the Generator (Gemini 1.5 Flash) along with the original query.  
+   - Context-Aware Response: The Generator synthesizes the information to produce an accurate, cited Response.  
+   - Feedback Loop: The response is delivered to the user, with the chat history being maintained to inform future queries.  
+
 
 ### High-Level Flow
 
 User Query → Retriever → Vector Database → Relevant Context → LLM → Final Answer
+
+**Figure 1: High-Level RAG Architecture**
+
+<figure>
+  <img src="Pipeline1.png" width="400" height="500" alt="High-Level RAG Architecture Diagram">
+  <figcaption>High-Level RAG Architecture Diagram</figcaption>
+</figure>
+
+
+**Figure 2: Retrieval and Generation Flow**
+
+<figure>
+  <img src="Picture2.png" width="900" height="500" alt="RAG Pipeline Flow">
+  <figcaption>Retrieval and Generation Flow</figcaption>
+</figure>
+
 
 
 ---
@@ -86,25 +124,9 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 - **Vector Store:** FAISS  
 - **Framework:** LangChain  
 - **Version Control:** GitHub  
-- **AI Coding Assistant:** GitHub Copilot  
+- **UI:** Streamlit
 
----
-
-## Role of GitHub Copilot in This Project
-
-GitHub Copilot was used strictly as an **AI-assisted development tool** to improve productivity and reduce boilerplate coding.
-
-### How GitHub Copilot Was Used
-
-- Suggested boilerplate code for document loading and preprocessing  
-- Assisted with repetitive coding tasks (embeddings, FAISS setup)  
-- Provided inline suggestions while working with LangChain APIs  
-- Helped speed up debugging and syntax corrections  
-
-### Developer Control
-
-All **architectural decisions, system design, and logic flow** were implemented manually by the developer.  
-GitHub Copilot acted only as a **supportive coding assistant**, not a replacement for reasoning or design.
+ 
 
 ---
 
@@ -120,57 +142,15 @@ GitHub Copilot acted only as a **supportive coding assistant**, not a replacemen
 
 ---
 
-## Setup Instructions
 
-To run the project locally:
 
-1. Clone the repository  
-2. Create and activate a Python virtual environment  
-3. Install required dependencies  
-4. Configure API keys using environment variables  
-5. Run document ingestion  
-6. Start querying the assistant  
 
-*(Detailed steps are available in the project documentation.)*
 
----
 
-## Key Learnings
 
-- Practical understanding of Retrieval-Augmented Generation  
-- Importance of grounding LLM responses with retrieved context  
-- Efficient use of vector databases for semantic search  
-- Responsible usage of AI-assisted coding tools  
-- End-to-end GenAI system integration  
 
----
 
-## Challenges and Solutions
 
-### Selecting Optimal Chunk Size
-**Challenge:** Preserving semantic context  
-**Solution:** Used overlapping chunks to maintain continuity  
 
-### Avoiding Hallucinations
-**Challenge:** Unverified LLM outputs  
-**Solution:** Restricted response generation strictly to retrieved document context  
 
----
-
-## Future Enhancements
-
-- Web-based frontend using Streamlit or Node.js  
-- Cloud deployment (AWS / Azure)  
-- Improved evaluation metrics for retrieval accuracy  
-- Support for additional document formats  
-
----
-
-## Repository Usage
-
-The repository is maintained using GitHub to ensure:
-
-- Code traceability  
-- Collaboration readiness  
-- Reproducibility  
 
