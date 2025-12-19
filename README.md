@@ -77,11 +77,21 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 
 User Query → Retriever → Vector Database → Relevant Context → LLM → Final Answer
 
-**Figure 1: High-Level RAG Architecture**  
-![High-Level Architecture Diagram](Pipeline1.png)
+**Figure 1: High-Level RAG Architecture**
 
-**Figure 2: Retrieval and Generation Flow**  
-![RAG Pipeline Flow](Picture2.png)
+<figure>
+  <img src="Pipeline1.png" width="400" height="500" alt="High-Level RAG Architecture Diagram">
+  <figcaption>High-Level RAG Architecture Diagram</figcaption>
+</figure>
+
+
+**Figure 2: Retrieval and Generation Flow**
+
+<figure>
+  <img src="Picture2.png" width="900" height="500" alt="RAG Pipeline Flow">
+  <figcaption>Retrieval and Generation Flow</figcaption>
+</figure>
+
 
 
 ---
@@ -165,6 +175,7 @@ The repository is maintained using GitHub to ensure:
 - Code traceability  
 - Collaboration readiness  
 - Reproducibility  
+
 
 
 
