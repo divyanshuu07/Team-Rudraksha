@@ -86,23 +86,7 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 - **Version Control:** GitHub  
 - **AI Coding Assistant:** GitHub Copilot  
 
----
-
-## Role of GitHub Copilot in This Project
-
-GitHub Copilot was used strictly as an **AI-assisted development tool** to improve productivity and reduce boilerplate coding.
-
-### How GitHub Copilot Was Used
-
-- Suggested boilerplate code for document loading and preprocessing  
-- Assisted with repetitive coding tasks (embeddings, FAISS setup)  
-- Provided inline suggestions while working with LangChain APIs  
-- Helped speed up debugging and syntax corrections  
-
-### Developer Control
-
-All **architectural decisions, system design, and logic flow** were implemented manually by the developer.  
-GitHub Copilot acted only as a **supportive coding assistant**, not a replacement for reasoning or design.
+ 
 
 ---
 
@@ -171,4 +155,5 @@ The repository is maintained using GitHub to ensure:
 - Code traceability  
 - Collaboration readiness  
 - Reproducibility  
+
 
