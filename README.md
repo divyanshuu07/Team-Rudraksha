@@ -16,47 +16,45 @@ By this project we as a team demonstrates our hands-on understanding of:
 
 ---
 
-## 🚀 Key Features & Architectural Highlights
+## ⚡ Key Features & Architectural Highlights
 
-This project implements a state-of-the-art RAG pipeline with 9 distinct layers of optimization to ensure accuracy, speed, and reliability.
+This project implements a state-of-the-art RAG pipeline optimized for real-world interaction, transparency, and multi-format intelligence.
 
-### 1. Hybrid Search (Ensemble Retrieval)
-**The Problem:** Standard vector search misses exact keyword matches (like specific error codes or acronyms).
-**Our Solution:** We combine **Dense Vector Index** (OpenAI Embeddings) with **Sparse Keyword Index** (BM25). The system weights results from both, capturing both conceptual meaning and exact terminology.
+### 1. Multilingual Response (Cross-Lingual Support)
+* **The Problem:** Knowledge bases are often in English, but users may speak Hindi, Spanish, or French.
+* **Our Solution:** The system uses a **Cross-Lingual Chain**. It accepts queries in any language, translates them to English for retrieval against the database, and generates the final response back in the user's native language, breaking language barriers.
 
-### 2. Advanced Re-Ranking (Cross-Encoder)
-**The Problem:** The "Lost in the Middle" phenomenon where relevant context is buried in the retrieved list.
-**Our Solution:** We retrieve a broad set of documents (Top 25) and pass them through a **Cross-Encoder Model**. This re-scores every document-query pair for relevance, ensuring only the highest-quality chunks reach the LLM.
+### 2. Citation & Transparency Work
+* **The Problem:** Users do not trust "black box" AI models that hallucinate facts.
+* **Our Solution:** We enforce **Strict Evidence Binding**. Every response includes an expandable "Source" tab that links directly to the specific document name and page number used, ensuring 100% auditability and trust.
 
-### 3. Graph-Enhanced Context (GraphRAG)
-**The Problem:** Flat text chunks lose relationships between entities across different documents.
-**Our Solution:** We extract entities (People, Places, Concepts) and build a lightweight relationship map. Queries retrieve not just text chunks, but also connected "neighbor" nodes, providing deep contextual awareness.
+### 3. YouTube Context Integration
+* **The Problem:** Valuable information is often locked inside video tutorials or recorded meetings, inaccessible to text search.
+* **Our Solution:** The pipeline integrates `YouTubeAudioLoader` and OpenAI Whisper. It downloads audio, transcribes it into text, and indexes the transcript with timestamps, allowing users to "search" inside videos.
 
-### 4. Query Expansion & Decomposition
-**The Problem:** Users often ask vague or complex multi-part questions.
-**Our Solution:** The system uses an LLM call to break down complex queries into sub-questions and generates synonyms (hypothetical document embeddings) to broaden the search scope and improve retrieval recall.
+### 4. Query Expansion Layer
+* **The Problem:** Users often ask vague or overly simple questions (e.g., "slow wifi") that miss technical keywords.
+* **Our Solution:** We use an intermediate LLM step to **decompose and expand** the query. The system generates synonyms and sub-questions (Hypothetical Document Embeddings) to broaden the search scope and drastically improve retrieval recall.
 
-### 5. Hallucination Guardrails & Citations
-**The Problem:** Models making up facts.
-**Our Solution:**
-* **Strict Adherence:** The prompt forces the model to say "I don't know" if the context is missing.
-* **Citations:** Every response explicitly links to the source file and page number for full auditability.
+### 5. Multi-Modal Retrieval (Images & Tables)
+* **The Problem:** Critical data is often trapped in charts, infographics, or scanned tables within PDFs.
+* **Our Solution:** The ingestion pipeline utilizes **OCR (Optical Character Recognition)** and multi-modal models to extract text from images and structure tables into JSON before embedding, ensuring no data is left behind.
 
-### 6. Metadata Filtering (Self-Querying)
-**The Problem:** Searching purely by text when the user actually wants to filter (e.g., "Show me reports from 2023").
-**Our Solution:** We use a Self-Querying Retriever that extracts metadata filters (Date, Author, File Type) from the user's natural language and applies them *before* performing the vector search.
+### 6. Intelligent Summarization
+* **The Problem:** Users don't always have time to read detailed answers; sometimes they need a "TL;DR" of a 50-page report.
+* **Our Solution:** We implemented a **Map-Reduce Summarization Chain**. The system can take large sets of retrieved documents and recursively condense them into a concise executive summary without losing key details.
 
-### 7. Intelligent Chunking Strategy
-**The Problem:** Fixed-size chunking often cuts sentences in half or separates headers from their content.
-**Our Solution:** We use a **Recursive Character Text Splitter** with semantic awareness. It respects document structure (paragraphs, headers) to keep related text together, preserving semantic integrity.
+### 7. Conversation Memory (Session State)
+* **The Problem:** Standard RAG systems treat every question as a new interaction, failing to understand "What about the second point?"
+* **Our Solution:** We maintain a `ConversationBufferMemory`. The system rephrases follow-up questions into standalone queries using the previous chat history, ensuring a smooth, context-aware conversational flow.
 
-### 8. Multi-Modal Ingestion Support
-**The Problem:** Information is often trapped in images or tables within PDFs.
-**Our Solution:** The pipeline supports OCR (Optical Character Recognition) to extract text from images and specifically parses tables to preserve their row/column structure before embedding.
+### 8. User Feedback Loop (RLHF Lite)
+* **The Problem:** Developers rarely know when the RAG system fails or gives a bad answer.
+* **Our Solution:** We included a **Thumbs Up/Down** feedback mechanism. Negative feedback logs the query and retrieved context to a file, creating a dataset for future fine-tuning and system improvement (Reinforcement Learning from Human Feedback).
 
-### 9. Conversation Memory (Session State)
-**The Problem:** Users cannot ask follow-up questions in standard RAG scripts.
-**Our Solution:** We maintain a chat history buffer. The system rephrases follow-up questions (e.g., "What about the second point?") into standalone queries using the previous context, ensuring a smooth conversational flow.
+### 9. Auto-Generated Follow-Up
+* **The Problem:** Users often don't know what to ask next after getting an answer.
+* **Our Solution:** After generating a response, the LLM analyzes the context to suggest **3 relevant follow-up questions**. This guides the user deeper into the document and improves engagement.
 
 ---
 
