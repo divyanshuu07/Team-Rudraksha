@@ -73,6 +73,16 @@ The system follows a standard **RAG pipeline**:
 
 User Query → Retriever → Vector Database → Relevant Context → LLM → Final Answer
 
+### High-Level Flow
+
+User Query → Retriever → Vector Database → Relevant Context → LLM → Final Answer
+
+**Figure 1: High-Level RAG Architecture**  
+![High-Level Architecture Diagram](Pipeline1.png)
+
+**Figure 2: Retrieval and Generation Flow**  
+![RAG Pipeline Flow](Picture2.png)
+
 
 ---
 
@@ -155,5 +165,6 @@ The repository is maintained using GitHub to ensure:
 - Code traceability  
 - Collaboration readiness  
 - Reproducibility  
+
 
 
