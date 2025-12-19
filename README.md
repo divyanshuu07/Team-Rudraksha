@@ -16,16 +16,47 @@ By this project we as a team demonstrates our hands-on understanding of:
 
 ---
 
-## Innovative Features
+## 🚀 Key Features & Architectural Highlights
 
-- Multilingual query support  
-- Multimodal-ready architecture  
-- Query expansion layer for improved retrieval  
-- Whole-document summarization  
-- Conversational memory across interactions  
-- User feedback loop for answer quality  
-- Auto-generated follow-up questions  
-- Citation and transparency for retrieved content  
+This project implements a state-of-the-art RAG pipeline with 9 distinct layers of optimization to ensure accuracy, speed, and reliability.
+
+### 1. Hybrid Search (Ensemble Retrieval)
+**The Problem:** Standard vector search misses exact keyword matches (like specific error codes or acronyms).
+**Our Solution:** We combine **Dense Vector Index** (OpenAI Embeddings) with **Sparse Keyword Index** (BM25). The system weights results from both, capturing both conceptual meaning and exact terminology.
+
+### 2. Advanced Re-Ranking (Cross-Encoder)
+**The Problem:** The "Lost in the Middle" phenomenon where relevant context is buried in the retrieved list.
+**Our Solution:** We retrieve a broad set of documents (Top 25) and pass them through a **Cross-Encoder Model**. This re-scores every document-query pair for relevance, ensuring only the highest-quality chunks reach the LLM.
+
+### 3. Graph-Enhanced Context (GraphRAG)
+**The Problem:** Flat text chunks lose relationships between entities across different documents.
+**Our Solution:** We extract entities (People, Places, Concepts) and build a lightweight relationship map. Queries retrieve not just text chunks, but also connected "neighbor" nodes, providing deep contextual awareness.
+
+### 4. Query Expansion & Decomposition
+**The Problem:** Users often ask vague or complex multi-part questions.
+**Our Solution:** The system uses an LLM call to break down complex queries into sub-questions and generates synonyms (hypothetical document embeddings) to broaden the search scope and improve retrieval recall.
+
+### 5. Hallucination Guardrails & Citations
+**The Problem:** Models making up facts.
+**Our Solution:**
+* **Strict Adherence:** The prompt forces the model to say "I don't know" if the context is missing.
+* **Citations:** Every response explicitly links to the source file and page number for full auditability.
+
+### 6. Metadata Filtering (Self-Querying)
+**The Problem:** Searching purely by text when the user actually wants to filter (e.g., "Show me reports from 2023").
+**Our Solution:** We use a Self-Querying Retriever that extracts metadata filters (Date, Author, File Type) from the user's natural language and applies them *before* performing the vector search.
+
+### 7. Intelligent Chunking Strategy
+**The Problem:** Fixed-size chunking often cuts sentences in half or separates headers from their content.
+**Our Solution:** We use a **Recursive Character Text Splitter** with semantic awareness. It respects document structure (paragraphs, headers) to keep related text together, preserving semantic integrity.
+
+### 8. Multi-Modal Ingestion Support
+**The Problem:** Information is often trapped in images or tables within PDFs.
+**Our Solution:** The pipeline supports OCR (Optical Character Recognition) to extract text from images and specifically parses tables to preserve their row/column structure before embedding.
+
+### 9. Conversation Memory (Session State)
+**The Problem:** Users cannot ask follow-up questions in standard RAG scripts.
+**Our Solution:** We maintain a chat history buffer. The system rephrases follow-up questions (e.g., "What about the second point?") into standalone queries using the previous context, ensuring a smooth conversational flow.
 
 ---
 
@@ -142,3 +173,4 @@ The repository is maintained using GitHub to ensure:
 - Code traceability  
 - Collaboration readiness  
 - Reproducibility  
+
