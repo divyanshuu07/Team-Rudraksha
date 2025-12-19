@@ -35,7 +35,7 @@ def load_api_key():
     except FileNotFoundError:
         return None
 
-OPENAI_API_KEY = load_api_key()
+OPENAI_API_KEY = OPENAI_API_KEY
 
 # --- 2. SESSION STATE ---
 if "chat_history" not in st.session_state:
