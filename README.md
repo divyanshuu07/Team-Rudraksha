@@ -60,14 +60,24 @@ This project implements a state-of-the-art RAG pipeline optimized for real-world
 
 ## System Architecture
 
-The system follows a standard **RAG pipeline**:
+The system follows an advanced RAG (Retrieval-Augmented Generation) Pipeline as illustrated in the technical flow:
 
-1. Document ingestion and preprocessing  
-2. Text chunking with overlap  
-3. Embedding generation  
-4. Vector storage using FAISS  
-5. Query embedding and similarity search  
-6. Context-aware response generation using an LLM  
+1. Data Ingestion & Indexing  
+   - Multi-Source Input: The system ingests data from multiple formats, specifically PDFs and YouTube links.  
+   - Recursive Chunking: Raw text is processed through a recursive chunking strategy to maintain structural context.  
+   - Vector Embedding: Chunks are transformed into high-dimensional vectors using an Embedding Model.  
+   - Knowledge Base Construction: These embeddings are stored in a centralized Knowledge Base (Vector Store) for efficient retrieval.  
+
+2. Retrieval & Context Processing  
+   - Query Transformation: User queries are processed (and embedded) to align with the Knowledge Base.  
+   - Context Retrieval: The system performs a similarity search to pull the most relevant "Retrieved Context" from the Knowledge Base.  
+   - Hybrid Search: (As per your code) Combining semantic vector search with keyword-based retrieval.  
+
+3. Response Generation  
+   - Generator (LLM): The Retrieved Context is fed into the Generator (Gemini 1.5 Flash) along with the original query.  
+   - Context-Aware Response: The Generator synthesizes the information to produce an accurate, cited Response.  
+   - Feedback Loop: The response is delivered to the user, with the chat history being maintained to inform future queries.  
+
 
 ### High-Level Flow
 
@@ -104,7 +114,7 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 - **Vector Store:** FAISS  
 - **Framework:** LangChain  
 - **Version Control:** GitHub  
-- **AI Coding Assistant:** GitHub Copilot  
+- **UI:** Streamlit
 
  
 
@@ -159,22 +169,6 @@ To run the project locally:
 
 ---
 
-## Future Enhancements
-
-- Web-based frontend using Streamlit or Node.js  
-- Cloud deployment (AWS / Azure)  
-- Improved evaluation metrics for retrieval accuracy  
-- Support for additional document formats  
-
----
-
-## Repository Usage
-
-The repository is maintained using GitHub to ensure:
-
-- Code traceability  
-- Collaboration readiness  
-- Reproducibility  
 
 
 
