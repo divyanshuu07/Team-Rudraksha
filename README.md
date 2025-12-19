@@ -58,6 +58,20 @@ This project implements a state-of-the-art RAG pipeline optimized for real-world
 
 ---
 
+## Project Structure
+```
+Document_RAG/
+├── app/
+│   ├── requirements.txt
+│   ├── main.py
+│   ├── utils/
+│   │   ├── embeddings.py
+│   │   ├── pdf_processor.py
+│   │   ├── gemini_api.py
+├── .gitignore
+├── .venv
+```
+
 ## System Architecture
 
 The system follows an advanced RAG (Retrieval-Augmented Generation) Pipeline as illustrated in the technical flow:
@@ -132,42 +146,9 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 
 ---
 
-## Setup Instructions
 
-To run the project locally:
 
-1. Clone the repository  
-2. Create and activate a Python virtual environment  
-3. Install required dependencies  
-4. Configure API keys using environment variables  
-5. Run document ingestion  
-6. Start querying the assistant  
 
-*(Detailed steps are available in the project documentation.)*
-
----
-
-## Key Learnings
-
-- Practical understanding of Retrieval-Augmented Generation  
-- Importance of grounding LLM responses with retrieved context  
-- Efficient use of vector databases for semantic search  
-- Responsible usage of AI-assisted coding tools  
-- End-to-end GenAI system integration  
-
----
-
-## Challenges and Solutions
-
-### Selecting Optimal Chunk Size
-**Challenge:** Preserving semantic context  
-**Solution:** Used overlapping chunks to maintain continuity  
-
-### Avoiding Hallucinations
-**Challenge:** Unverified LLM outputs  
-**Solution:** Restricted response generation strictly to retrieved document context  
-
----
 
 
 
