@@ -142,6 +142,55 @@ User Query → Retriever → Vector Database → Relevant Context → LLM → Fi
 
 ---
 
+## 🛠️ Prerequisites
+
+* Python 3.9 or higher
+* An [OpenAI API Key](https://platform.openai.com/api-keys)
+
+## Installation
+
+1.  **Clone the repository** (or download the files):
+    ```bash
+    git clone <your-repo-url>
+    cd <your-repo-folder>
+    ```
+
+2.  **Create a Virtual Environment** (Recommended):
+    ```bash
+    # Windows
+    python -m venv venv
+    .\venv\Scripts\activate
+
+    # Mac/Linux
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Configuration
+
+1.  Create a file named **`api_open.txt`** in the root directory of the project.
+2.  Paste your OpenAI API key inside it (no quotes, no spaces).
+
+    **api_open.txt:**
+    ```text
+    sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    ```
+
+    > **Note:** This file is in `.gitignore` to prevent you from accidentally pushing your secrets to GitHub.
+
+## How to Run
+
+Run the Streamlit application:
+
+```bash
+streamlit run app.py
+
+
 
 
 
